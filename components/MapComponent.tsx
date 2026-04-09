@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 
 const customMarkerIcon = new L.Icon({
@@ -27,6 +27,17 @@ export default function MapComponent({ devices }: { devices: Record<string, [num
       {/* MENGULANG DAN MENAMPILKAN PIN UNTUK SETIAP HP YANG ADA DI DATABASE */}
       {Object.entries(devices).map(([deviceName, coords]) => (
         <Marker key={deviceName} position={coords} icon={customMarkerIcon}>
+          
+          {/* --- BAGIAN BARU: Tooltip permanen agar nama muncul di atas icon --- */}
+          <Tooltip 
+            permanent 
+            direction="top" 
+            offset={[0, -40]} 
+            opacity={0.9}
+          >
+            <span style={{ fontWeight: 'bold', color: '#1A237E' }}>{deviceName}</span>
+          </Tooltip>
+
           <Popup>
             <strong>{deviceName}</strong> <br />
             Lat: {coords[0]} <br />
